@@ -58,7 +58,8 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setUser((prevUser) => {
       let newXP = prevUser.xp + amount;
       let newLevel = prevUser.level;
-      let newRewards = [...prevUser.rewards];
+      const newRewards = [...prevUser.rewards];
+
 
       // Monte de niveau tous les 100 XP
       if (newXP >= 100) {
