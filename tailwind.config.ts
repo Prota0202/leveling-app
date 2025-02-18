@@ -6,13 +6,19 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#4F46E5", // Couleur principale (bleu)
-        secondary: "#10B981", // Couleur secondaire (vert)
-        accent: "#F59E0B", // Couleur d'accent (orange)
+        primary: "#FF5C00", // Orange vif pour les accents (comme les portails)
+        secondary: "#00A8FF", // Bleu électrique pour les éléments magiques
+        dark: "#1A1A1A", // Fond sombre
+        light: "#F0F0F0", // Texte clair
+        danger: "#FF0000", // Rouge pour les éléments dangereux
       },
       fontFamily: {
-        sans: ["Geist", "sans-serif"], // Utilise la police Geist
-        mono: ["Geist Mono", "monospace"], // Utilise la police Geist Mono
+        sans: ["Geist", "sans-serif"], // Police moderne
+        title: ["Poppins", "sans-serif"], // Police pour les titres
+      },
+      backgroundImage: {
+        "portal-gradient": "linear-gradient(135deg, #FF5C00, #00A8FF)", // Dégradé pour les portails
+        "monster-bg": "url('/images/monster-bg.jpg')", // Image de fond pour les monstres
       },
     },
   },

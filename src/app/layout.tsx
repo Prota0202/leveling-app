@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from "@/app/context/UserContext"; // Import du contexte utilisateur
+import { UserProvider } from "@/app/context/UserContext";
 
 // Configuration des polices Geist
 const geistSans = Geist({
@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 // Métadonnées de l'application
 export const metadata: Metadata = {
-  title: "Leveling App",
+  title: "Leveling App - Solo Leveling",
   description: "Une application inspirée de Solo Leveling pour suivre ta progression !",
 };
 
@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} bg-dark text-light`}>
         {/* Enveloppe l'application avec le UserProvider */}
         <UserProvider>{children}</UserProvider>
       </body>

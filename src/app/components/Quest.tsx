@@ -68,19 +68,19 @@ export default function Quest() {
   };
 
   return (
-    <div className="p-4 bg-gray-800 text-white rounded-lg shadow-lg">
-      <h2 className="text-xl font-bold mb-4">Quêtes</h2>
+    <div className="p-4 bg-dark rounded-lg shadow-lg">
+      <h2 className="text-xl font-title text-primary mb-4">Quêtes</h2>
       <button
         onClick={addQuest}
-        className="mb-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded flex items-center space-x-2"
+        className="mb-4 px-4 py-2 bg-primary hover:bg-secondary rounded flex items-center space-x-2"
       >
-        <FaPlusCircle className="text-white" />
-        <span>Générer une nouvelle quête</span>
+        <FaPlusCircle className="text-light" />
+        <span className="text-light">Générer une nouvelle quête</span>
       </button>
       <div className="space-y-4">
         {quests.map((quest) => (
-          <div key={quest.id} className="p-4 bg-gray-700 rounded-lg">
-            <h3 className="font-semibold">{quest.title}</h3>
+          <div key={quest.id} className="p-4 bg-gray-800 rounded-lg">
+            <h3 className="font-semibold text-light">{quest.title}</h3>
             <p className="text-sm text-gray-300">{quest.description}</p>
             <p className="text-sm text-gray-300">Récompense : {quest.xpReward} XP</p>
             <button
@@ -89,18 +89,18 @@ export default function Quest() {
               className={`mt-2 px-4 py-2 rounded flex items-center space-x-2 ${
                 quest.completed
                   ? "bg-gray-500 cursor-not-allowed"
-                  : "bg-blue-500 hover:bg-blue-600"
+                  : "bg-primary hover:bg-secondary"
               }`}
             >
               {quest.completed ? (
                 <>
-                  <FaCheckCircle className="text-white" />
-                  <span>Complétée</span>
+                  <FaCheckCircle className="text-light" />
+                  <span className="text-light">Complétée</span>
                 </>
               ) : (
                 <>
-                  <FaTimesCircle className="text-white" />
-                  <span>Compléter</span>
+                  <FaTimesCircle className="text-light" />
+                  <span className="text-light">Compléter</span>
                 </>
               )}
             </button>
