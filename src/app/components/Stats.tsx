@@ -1,6 +1,6 @@
-"use client"; // Ce composant utilise des hooks React, donc il doit être côté client
+"use client";
 
-import { useUser } from "C:\\Users\\AbdelBadi\\leveling-app\\src\\app\\context\\UserContext";
+import { useUser } from "@/app/context/UserContext";
 
 export default function Stats() {
   const { user } = useUser();

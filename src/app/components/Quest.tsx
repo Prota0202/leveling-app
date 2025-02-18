@@ -1,6 +1,6 @@
-"use client"; // Ce composant utilise des hooks React, donc il doit être côté client
+"use client";
 
-import { useUser } from "C:\\Users\\AbdelBadi\\leveling-app\\src\\app\\context\\UserContext";
+import { useUser } from "@/app/context/UserContext";
 
 // Définition du type d'une quête
 interface Quest {
@@ -37,19 +37,13 @@ const quests: Quest[] = [
 ];
 
 export default function Quest() {
-  const { user, setUser } = useUser();
+  const { gainXP } = useUser();
 
   // Fonction pour compléter une quête
   const completeQuest = (quest: Quest) => {
     if (!quest.completed) {
-      // Ajoute l'XP de la quête au joueur
-      setUser({
-        ...user,
-        xp: user.xp + quest.xpReward,
-      });
-
-      // Marque la quête comme complétée
-      quest.completed = true;
+      gainXP(quest.xpReward); // Ajoute l'XP de la quête
+      quest.completed = true; // Marque la quête comme complétée
     }
   };
 

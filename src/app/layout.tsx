@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { UserProvider } from "C:\\Users\\AbdelBadi\\leveling-app\\src\\app\\context\\UserContext.tsx"; // Import du contexte utilisateur
+import { UserProvider } from "@/app/context/UserContext"; // Import du contexte utilisateur
 
 // Configuration des polices Geist
 const geistSans = Geist({

@@ -1,6 +1,7 @@
-import Stats from "C:\\Users\\AbdelBadi\\leveling-app\\src\\app\\components\\Stats";
-import Quest from "C:\\Users\\AbdelBadi\\leveling-app\\src\\app\\components\\Quest";
-
+import Stats from "@/app/components/Stats";
+import Quest from "@/app/components/Quest";
+import Rewards from "@/app/components/Rewards";
+import Leaderboard from "@/app/components/Leaderboard";
 
 export default function Home() {
   return (
@@ -9,7 +10,9 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-center mb-8">Leveling App</h1>
         <div className="grid gap-4">
           <Stats />
-          {/*Ajouter d'autres composants comme les quêtes, la progression, etc. */}
+          <Quest />
+          <Rewards />
+          <Leaderboard />
         </div>
       </div>
     </main>

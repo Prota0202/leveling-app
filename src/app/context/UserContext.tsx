@@ -1,4 +1,4 @@
-"use client"; // Ce fichier utilise des hooks React, donc il doit être côté client
+"use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
 
@@ -11,6 +11,7 @@ interface UserData {
     intelligence: number;
     endurance: number;
   };
+  rewards: string[]; // Récompenses du joueur
 }
 
 // Valeurs par défaut du joueur
@@ -22,13 +23,14 @@ const defaultUserData: UserData = {
     intelligence: 5,
     endurance: 5,
   },
+  rewards: [],
 };
 
 // Création du contexte
 const UserContext = createContext<{
   user: UserData;
   setUser: (user: UserData) => void;
-  gainXP: (amount: number) => void; // Ajout de la fonction gainXP
+  gainXP: (amount: number) => void;
 } | undefined>(undefined);
 
 // Provider du contexte
@@ -40,17 +42,25 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     setUser((prevUser) => {
       let newXP = prevUser.xp + amount;
       let newLevel = prevUser.level;
+      let newRewards = [...prevUser.rewards];
 
       // Monte de niveau tous les 100 XP
       if (newXP >= 100) {
-        newLevel += Math.floor(newXP / 100);
+        const levelsGained = Math.floor(newXP / 100);
+        newLevel += levelsGained;
         newXP %= 100;
+
+        // Ajoute une récompense pour chaque niveau gagné
+        for (let i = 0; i < levelsGained; i++) {
+          newRewards.push(`Récompense niveau ${newLevel - i}`);
+        }
       }
 
       return {
         ...prevUser,
         level: newLevel,
         xp: newXP,
+        rewards: newRewards,
       };
     });
   };
