@@ -1,18 +1,20 @@
-import type { Config } from "tailwindcss";
-
-export default {
+module.exports = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx}",
+    "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: "#4F46E5", // Couleur principale (bleu)
+        secondary: "#10B981", // Couleur secondaire (vert)
+        accent: "#F59E0B", // Couleur d'accent (orange)
+      },
+      fontFamily: {
+        sans: ["Geist", "sans-serif"], // Utilise la police Geist
+        mono: ["Geist Mono", "monospace"], // Utilise la police Geist Mono
       },
     },
   },
   plugins: [],
-} satisfies Config;
+};
