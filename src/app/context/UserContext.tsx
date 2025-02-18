@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 // Définition du type des données du joueur
 interface UserData {
@@ -11,7 +11,7 @@ interface UserData {
     intelligence: number;
     endurance: number;
   };
-  rewards: string[]; // Récompenses du joueur
+  rewards: string[];
 }
 
 // Valeurs par défaut du joueur
@@ -36,6 +36,19 @@ const UserContext = createContext<{
 // Provider du contexte
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<UserData>(defaultUserData);
+
+  // Charger les données depuis localStorage au démarrage
+  useEffect(() => {
+    const savedData = localStorage.getItem("userData");
+    if (savedData) {
+      setUser(JSON.parse(savedData));
+    }
+  }, []);
+
+  // Sauvegarder les données dans localStorage à chaque changement
+  useEffect(() => {
+    localStorage.setItem("userData", JSON.stringify(user));
+  }, [user]);
 
   // Fonction pour gagner de l'XP et gérer la montée de niveau
   const gainXP = (amount: number) => {
