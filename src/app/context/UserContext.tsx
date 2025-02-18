@@ -7,6 +7,7 @@ interface UserData {
   name: string; // Nom d'utilisateur
   level: number;
   xp: number;
+  class: string; // Classe du joueur
   stats: {
     strength: number;
     intelligence: number;
@@ -20,6 +21,7 @@ const defaultUserData: UserData = {
   name: "", // Nom vide par défaut
   level: 1,
   xp: 0,
+  class: "Guerrier", // Classe par défaut
   stats: {
     strength: 5,
     intelligence: 5,
@@ -34,6 +36,7 @@ const UserContext = createContext<{
   setUser: (user: UserData) => void;
   gainXP: (amount: number) => void;
   updateName: (name: string) => void;
+  changeClass: (newClass: string) => void;
 } | undefined>(undefined);
 
 // Provider du contexte
@@ -59,7 +62,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       let newXP = prevUser.xp + amount;
       let newLevel = prevUser.level;
       const newRewards = [...prevUser.rewards];
-
 
       // Monte de niveau tous les 100 XP
       if (newXP >= 100) {
@@ -90,8 +92,21 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }));
   };
 
+  // Fonction pour changer de classe
+  const changeClass = (newClass: string) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      class: newClass,
+      stats: {
+        strength: newClass === "Guerrier" ? 15 : 10,
+        intelligence: newClass === "Mage" ? 15 : 5,
+        endurance: newClass === "Assassin" ? 15 : 8,
+      },
+    }));
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, gainXP, updateName }}>
+    <UserContext.Provider value={{ user, setUser, gainXP, updateName, changeClass }}>
       {children}
     </UserContext.Provider>
   );
