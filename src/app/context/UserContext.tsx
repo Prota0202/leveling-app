@@ -4,6 +4,7 @@ import { createContext, useContext, useState, ReactNode, useEffect } from "react
 
 // Définition du type des données du joueur
 interface UserData {
+  name: string; // Nom d'utilisateur
   level: number;
   xp: number;
   stats: {
@@ -11,11 +12,12 @@ interface UserData {
     intelligence: number;
     endurance: number;
   };
-  rewards: string[];
+  rewards: string[]; // Récompenses du joueur
 }
 
 // Valeurs par défaut du joueur
 const defaultUserData: UserData = {
+  name: "", // Nom vide par défaut
   level: 1,
   xp: 0,
   stats: {
@@ -31,6 +33,7 @@ const UserContext = createContext<{
   user: UserData;
   setUser: (user: UserData) => void;
   gainXP: (amount: number) => void;
+  updateName: (name: string) => void;
 } | undefined>(undefined);
 
 // Provider du contexte
@@ -78,8 +81,16 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  // Fonction pour mettre à jour le nom d'utilisateur
+  const updateName = (name: string) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      name,
+    }));
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, gainXP }}>
+    <UserContext.Provider value={{ user, setUser, gainXP, updateName }}>
       {children}
     </UserContext.Provider>
   );

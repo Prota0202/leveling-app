@@ -1,6 +1,7 @@
 "use client";
 
 import { useUser } from "@/app/context/UserContext";
+import { motion } from "framer-motion"; // Pour les animations
 
 // Définition du type d'une quête
 interface Quest {
@@ -48,11 +49,20 @@ export default function Quest() {
   };
 
   return (
-    <div className="p-4 bg-gray-800 text-white rounded-lg shadow-lg">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="p-4 bg-gray-800 text-white rounded-lg shadow-lg"
+    >
       <h2 className="text-xl font-bold mb-4">Quêtes</h2>
       <div className="space-y-4">
         {quests.map((quest) => (
-          <div key={quest.id} className="p-4 bg-gray-700 rounded-lg">
+          <motion.div
+            key={quest.id}
+            whileHover={{ scale: 1.05 }}
+            className="p-4 bg-gray-700 rounded-lg"
+          >
             <h3 className="font-semibold">{quest.title}</h3>
             <p className="text-sm text-gray-300">{quest.description}</p>
             <p className="text-sm text-gray-300">Récompense : {quest.xpReward} XP</p>
@@ -67,9 +77,9 @@ export default function Quest() {
             >
               {quest.completed ? "Complétée" : "Compléter"}
             </button>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
