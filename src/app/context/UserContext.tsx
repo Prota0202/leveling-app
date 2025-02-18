@@ -4,30 +4,53 @@ import { createContext, useContext, useState, ReactNode, useEffect } from "react
 
 // Définition du type des données du joueur
 interface UserData {
-  name: string; // Nom d'utilisateur
+  name: string;
   level: number;
   xp: number;
-  class: string; // Classe du joueur
+  class: string;
   stats: {
     strength: number;
     intelligence: number;
     endurance: number;
   };
-  rewards: string[]; // Récompenses du joueur
+  rewards: string[];
+  quests: Quest[];
+  gold: number;
+  crystals: number;
+  activeQuest: Quest | null; // Quête active actuellement affichée
+}
+
+interface Quest {
+  id: number;
+  title: string;
+  description: string;
+  type: "physical" | "combat" | "social" | "story";
+  goal: number;
+  reward: {
+    gold: number;
+    crystals: number;
+    items?: string[];
+  };
+  cooldown: number;
+  completed: boolean;
 }
 
 // Valeurs par défaut du joueur
 const defaultUserData: UserData = {
-  name: "", // Nom vide par défaut
+  name: "",
   level: 1,
   xp: 0,
-  class: "Guerrier", // Classe par défaut
+  class: "Guerrier",
   stats: {
     strength: 5,
     intelligence: 5,
     endurance: 5,
   },
   rewards: [],
+  quests: [],
+  gold: 0,
+  crystals: 0,
+  activeQuest: null,
 };
 
 // Création du contexte
@@ -37,6 +60,12 @@ const UserContext = createContext<{
   gainXP: (amount: number) => void;
   updateName: (name: string) => void;
   changeClass: (newClass: string) => void;
+  addQuest: (quest: Quest) => void;
+  completeQuest: (questId: number) => void;
+  addGold: (amount: number) => void;
+  addCrystals: (amount: number) => void;
+  acceptQuest: () => void;
+  refuseQuest: () => void;
 } | undefined>(undefined);
 
 // Provider du contexte
@@ -105,8 +134,122 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }));
   };
 
+  // Fonction pour ajouter une quête
+  const addQuest = (quest: Quest) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      quests: [...prevUser.quests, quest],
+    }));
+  };
+
+  // Fonction pour compléter une quête
+  const completeQuest = (questId: number) => {
+    setUser((prevUser) => {
+      const updatedQuests = prevUser.quests.map((quest) =>
+        quest.id === questId ? { ...quest, completed: true } : quest
+      );
+      const completedQuest = prevUser.quests.find((quest) => quest.id === questId);
+      if (completedQuest && !completedQuest.completed) {
+        gainXP(completedQuest.reward.gold);
+        addGold(completedQuest.reward.gold);
+        addCrystals(completedQuest.reward.crystals);
+      }
+      return {
+        ...prevUser,
+        quests: updatedQuests,
+      };
+    });
+  };
+
+  // Fonction pour ajouter de l'or
+  const addGold = (amount: number) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      gold: prevUser.gold + amount,
+    }));
+  };
+
+  // Fonction pour ajouter des cristaux
+  const addCrystals = (amount: number) => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      crystals: prevUser.crystals + amount,
+    }));
+  };
+
+  // Fonction pour accepter une quête
+  const acceptQuest = () => {
+    setUser((prevUser) => {
+      if (prevUser.activeQuest) {
+        return {
+          ...prevUser,
+          quests: [...prevUser.quests, prevUser.activeQuest],
+          activeQuest: null,
+        };
+      }
+      return prevUser;
+    });
+  };
+
+  // Fonction pour refuser une quête
+  const refuseQuest = () => {
+    setUser((prevUser) => ({
+      ...prevUser,
+      activeQuest: null,
+    }));
+  };
+
+  // Démarrer les quêtes périodiques
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newQuest = generateRandomQuest();
+      setUser((prevUser) => ({
+        ...prevUser,
+        activeQuest: newQuest,
+      }));
+    }, 1 * 60 * 1000); // Toutes les 30 minutes
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Générer une quête aléatoire
+  const generateRandomQuest = (): Quest => {
+    const questTypes = ["physical", "combat", "social", "story"];
+    const randomType = questTypes[Math.floor(Math.random() * questTypes.length)];
+    const goal = Math.floor(Math.random() * 10) + 1; // Objectif aléatoire entre 1 et 10
+
+    return {
+      id: Math.random(),
+      title: `Quête ${randomType}`,
+      description: `Complète cette quête pour gagner des récompenses !`,
+      type: randomType as "physical" | "combat" | "social" | "story",
+      goal,
+      reward: {
+        gold: goal * 10,
+        crystals: goal * 2,
+        items: ["potion_minor"], // Récompense aléatoire
+      },
+      cooldown: 30,
+      completed: false,
+    };
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, gainXP, updateName, changeClass }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        gainXP,
+        updateName,
+        changeClass,
+        addQuest,
+        completeQuest,
+        addGold,
+        addCrystals,
+        acceptQuest,
+        refuseQuest,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

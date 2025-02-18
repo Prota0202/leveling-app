@@ -1,3 +1,5 @@
+"use client";
+
 import Stats from "@/app/components/Stats";
 import Quest from "@/app/components/Quest";
 import Rewards from "@/app/components/Rewards";
@@ -5,6 +7,7 @@ import Leaderboard from "@/app/components/Leaderboard";
 import Login from "@/app/components/Login";
 import Dungeon from "@/app/components/Dungeon";
 import ClassSelection from "@/app/components/ClassSelection";
+import QuestPopup from "@/app/components/QuestPopup";
 
 export default function Home() {
   return (
@@ -23,6 +26,7 @@ export default function Home() {
           <Dungeon />
         </div>
       </div>
+      <QuestPopup /> {/* Ajout du popup de quête */}
     </main>
   );
 }
