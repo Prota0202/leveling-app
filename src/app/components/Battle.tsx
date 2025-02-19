@@ -10,7 +10,7 @@ interface Enemy {
   health: number;
   strength: number;
   rewardXP: number;
-  image: string; // URL de l'image de l'ennemi
+  image: string; 
 }
 
 // Liste des ennemis disponibles
@@ -21,7 +21,7 @@ const enemies: Enemy[] = [
     health: 50,
     strength: 10,
     rewardXP: 20,
-    image: "/images/goblin.png", // Chemin vers l'image
+    image: "/images/Gobelin.png",
   },
   {
     id: 2,
@@ -29,7 +29,7 @@ const enemies: Enemy[] = [
     health: 100,
     strength: 20,
     rewardXP: 40,
-    image: "/images/orc.png", // Chemin vers l'image
+    image: "/images/orc.png",
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ const enemies: Enemy[] = [
     health: 200,
     strength: 40,
     rewardXP: 100,
-    image: "/images/dragon.png", // Chemin vers l'image
+    image: "/images/dragon.png",
   },
 ];
 

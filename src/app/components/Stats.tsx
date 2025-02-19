@@ -1,43 +1,75 @@
 "use client";
 
 import { useUser } from "@/app/context/UserContext";
-import { FaFire, FaBrain, FaHeart } from "react-icons/fa"; // Import des icônes
+import { FaFire, FaBrain, FaHeart, FaRunning, FaChartLine } from "react-icons/fa";
 
 export default function Stats() {
   const { user } = useUser();
 
   return (
-    <div className="p-4 bg-dark rounded-lg shadow-lg">
-      <h2 className="text-xl font-title text-primary mb-4">Statistiques</h2>
-      <div className="space-y-2">
-        <div className="flex items-center space-x-2">
-          <FaFire className="text-primary" />
-          <p className="text-light">
-            <span className="font-semibold">Niveau :</span> {user.level}
+    <div className="p-6 bg-dark rounded-lg shadow-lg border border-gray-700">
+      <h2 className="text-2xl font-title text-primary mb-6">Statistiques</h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Rang et Classe */}
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-lg font-semibold text-light flex items-center gap-2">
+            <FaChartLine className="text-primary" />
+            Rang & Classe
+          </h3>
+          <p className="text-sm text-gray-300 mt-2">
+            <span className="font-bold">Rang:</span> {user.stats.rank}
+          </p>
+          <p className="text-sm text-gray-300">
+            <span className="font-bold">Classe:</span> {user.class}
           </p>
         </div>
-        <div className="flex items-center space-x-2">
-          <FaFire className="text-primary" />
-          <p className="text-light">
-            <span className="font-semibold">XP :</span> {user.xp}
+
+        {/* Niveau et XP */}
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-lg font-semibold text-light flex items-center gap-2">
+            <FaFire className="text-primary" />
+            Niveau & XP
+          </h3>
+          <p className="text-sm text-gray-300 mt-2">
+            <span className="font-bold">Niveau:</span> {user.level}
+          </p>
+          <p className="text-sm text-gray-300">
+            <span className="font-bold">XP:</span> {user.xp}/300
           </p>
         </div>
-        <div className="flex items-center space-x-2">
-          <FaFire className="text-primary" />
-          <p className="text-light">
-            <span className="font-semibold">Force :</span> {user.stats.strength}
+
+        {/* Statistiques physiques */}
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-lg font-semibold text-light flex items-center gap-2">
+            <FaRunning className="text-primary" />
+            Activité Physique
+          </h3>
+          <p className="text-sm text-gray-300 mt-2">
+            <span className="font-bold">Distance:</span> {user.physicalActivity.distance} km
+          </p>
+          <p className="text-sm text-gray-300">
+            <span className="font-bold">Calories:</span> {user.physicalActivity.calories} cal
+          </p>
+          <p className="text-sm text-gray-300">
+            <span className="font-bold">Temps:</span> {user.physicalActivity.timeSpent} min
           </p>
         </div>
-        <div className="flex items-center space-x-2">
-          <FaBrain className="text-secondary" />
-          <p className="text-light">
-            <span className="font-semibold">Intelligence :</span> {user.stats.intelligence}
+
+        {/* Statistiques de base */}
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h3 className="text-lg font-semibold text-light flex items-center gap-2">
+            <FaHeart className="text-primary" />
+            Statistiques
+          </h3>
+          <p className="text-sm text-gray-300 mt-2">
+            <span className="font-bold">Force:</span> {user.stats.strength}
           </p>
-        </div>
-        <div className="flex items-center space-x-2">
-          <FaHeart className="text-danger" />
-          <p className="text-light">
-            <span className="font-semibold">Endurance :</span> {user.stats.endurance}
+          <p className="text-sm text-gray-300">
+            <span className="font-bold">Intelligence:</span> {user.stats.intelligence}
+          </p>
+          <p className="text-sm text-gray-300">
+            <span className="font-bold">Endurance:</span> {user.stats.endurance}
           </p>
         </div>
       </div>

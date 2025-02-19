@@ -2,7 +2,6 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
-// Définition du type des données du joueur
 interface UserData {
   name: string;
   level: number;
@@ -12,12 +11,23 @@ interface UserData {
     strength: number;
     intelligence: number;
     endurance: number;
+    rank: string;
+    height: number;
+    weight: number;
+    bmi: number;
   };
   rewards: string[];
   quests: Quest[];
   gold: number;
   crystals: number;
-  activeQuest: Quest | null; // Quête active actuellement affichée
+  activeQuest: Quest | null;
+  physicalActivity: {
+    steps: number;
+    distance: number;
+    calories: number;
+    timeSpent: number;
+  };
+
 }
 
 interface Quest {
@@ -51,6 +61,13 @@ const defaultUserData: UserData = {
   gold: 0,
   crystals: 0,
   activeQuest: null,
+
+  physicalActivity: {
+    steps: 0,
+    distance: 0,
+    calories: 0,
+    timeSpent: 0
+  }
 };
 
 // Création du contexte
@@ -205,18 +222,19 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       const newQuest = generateRandomQuest();
       setUser((prevUser) => ({
         ...prevUser,
-        activeQuest: newQuest,
+        activeQuest: newQuest
       }));
-    }, 1 * 60 * 1000); // Toutes les 30 minutes
-
+    }, 60000);
+  
     return () => clearInterval(interval);
   }, []);
+  
 
   // Générer une quête aléatoire
   const generateRandomQuest = (): Quest => {
     const questTypes = ["physical", "combat", "social", "story"];
     const randomType = questTypes[Math.floor(Math.random() * questTypes.length)];
-    const goal = Math.floor(Math.random() * 10) + 1; // Objectif aléatoire entre 1 et 10
+    const goal = Math.floor(Math.random() * 10) + 1;
 
     return {
       id: Math.random(),
